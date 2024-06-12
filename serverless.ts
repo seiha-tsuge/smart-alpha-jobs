@@ -17,6 +17,9 @@ const serverlessConfiguration: AWS = {
     hello: {
       handler: 'src/functions/hello/handler.main'
     },
+    hello2: {
+      handler: 'src/functions/hello2/handler.main'
+    },
   },
   package: { individually: true },
   custom: {
