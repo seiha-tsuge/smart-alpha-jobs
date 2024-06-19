@@ -3,7 +3,7 @@ import type { AWS } from '@serverless/typescript';
 const serverlessConfiguration: AWS = {
   service: 'smart-alpha-jobs',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: ['serverless-esbuild', 'serverless-dotenv-plugin'],
   provider: {
     name: 'aws',
     runtime: 'nodejs20.x',
@@ -21,7 +21,16 @@ const serverlessConfiguration: AWS = {
       handler: 'src/functions/hello2/handler.main'
     },
   },
-  package: { individually: true },
+  package: { 
+    individually: true,
+    patterns: [
+      '!node_modules/.prisma/client/libquery_engine-*',
+      'node_modules/.prisma/client/libquery_engine-debian-openssl-3.0.x.so.node',
+      '!node_modules/prisma/libquery_engine-*',
+      '!node_modules/@prisma/engines/**',
+      '!node_modules/.cache/prisma/**'  // only required for Windows
+    ]
+  },
   custom: {
     esbuild: {
       bundle: true,
